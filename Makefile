@@ -108,3 +108,6 @@ clean:
 	cd test-contracts/transfer_filter_contract && cargo clean
 	cd tests && cargo clean
 	rm -rf tests/wasm
+
+create-fixture:
+	cd tests && cargo run --release
