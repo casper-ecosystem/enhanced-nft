@@ -10,7 +10,7 @@ use casper_types::{
     CLType, CLTyped,
 };
 
-use core::{convert::TryFrom, default};
+use core::convert::TryFrom;
 
 use crate::error::NFTCoreError;
 
