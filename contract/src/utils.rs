@@ -148,7 +148,8 @@ pub fn get_optional_named_arg_with_user_errors<T: FromBytes>(
 ) -> Option<T> {
     match get_named_arg_with_user_errors::<T>(name, NFTCoreError::Phantom, invalid) {
         Ok(val) => Some(val),
-        Err(_) => None,
+        Err(NFTCoreError::Phantom) => None,
+        Err(_) => runtime::revert(invalid),
     }
 }
 

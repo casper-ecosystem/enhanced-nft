@@ -2574,12 +2574,9 @@ fn install_contract() {
     // Refer to the enum `NFTKind`
     // in the `src/modalities.rs` file for details.
     // This value cannot be changed after installation.
-    let nft_kind: u8 = utils::get_named_arg_with_user_errors(
-        ARG_NFT_KIND,
-        NFTCoreError::MissingNftKind,
-        NFTCoreError::InvalidNftKind,
-    )
-    .unwrap_or_revert();
+    let nft_kind: u8 =
+        utils::get_optional_named_arg_with_user_errors(ARG_NFT_KIND, NFTCoreError::InvalidNftKind)
+            .unwrap_or(NFTKind::default() as u8);
 
     // Represents whether Accounts or Contracts, or both can hold NFTs for
     // a given contract instance. Refer to the enum `NFTHolderMode`
