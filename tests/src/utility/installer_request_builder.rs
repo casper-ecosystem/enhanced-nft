@@ -351,6 +351,11 @@ impl InstallerRequestBuilder {
         self
     }
 
+    pub(crate) fn with_nft_kind(mut self, nft_kind: NFTKind) -> Self {
+        self.transfer_filter_contract = Some(CLValue::from_t(nft_kind as u8).unwrap());
+        self
+    }
+
     pub(crate) fn build(self) -> ExecuteRequest {
         let mut runtime_args = RuntimeArgs::new();
         runtime_args.insert_cl_value(ARG_COLLECTION_NAME, self.collection_name);

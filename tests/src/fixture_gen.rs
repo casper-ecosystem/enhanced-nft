@@ -6,8 +6,8 @@ use casper_types::{runtime_args, ContractHash, Key, RuntimeArgs
 };
 
 
-use contract::{constants::{ARG_COLLECTION_NAME, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER}, modalities::OwnershipMode};
-use utility::{constants::{ARG_NFT_CONTRACT_HASH, CONTRACT_NAME, MINT_SESSION_WASM, NFT_CONTRACT_WASM, NFT_TEST_COLLECTION, TEST_PRETTY_CEP78_METADATA}, installer_request_builder::NFTMetadataKind};
+use contract::{constants::{ARG_COLLECTION_NAME, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER}, modalities::{EventsMode, MintingMode, NFTHolderMode, NFTKind, OwnershipMode, WhitelistMode}};
+use utility::{constants::{ARG_NFT_CONTRACT_HASH, CONTRACT_NAME, MINT_SESSION_WASM, NFT_CONTRACT_WASM, NFT_TEST_COLLECTION, TEST_PRETTY_CEP78_METADATA}, installer_request_builder::{MetadataMutability, NFTIdentifierMode, NFTMetadataKind}};
 
 mod utility;
 
@@ -25,14 +25,22 @@ pub(crate) fn get_nft_contract_hash(
     ContractHash::new(nft_hash_addr)
 }
 
-
 fn main() {
     generate_fixture("cep78_1.5.1-ee1.5.6-minted", PRODUCTION_RUN_GENESIS_REQUEST.clone(), |builder|{
         let install_request_builder =
             utility::installer_request_builder::InstallerRequestBuilder::new(*DEFAULT_ACCOUNT_ADDR, NFT_CONTRACT_WASM)
+                .with_total_token_supply(100)
+                .with_holder_mode(NFTHolderMode::Accounts)
                 .with_ownership_mode(OwnershipMode::Transferable)
-                .with_nft_metadata_kind(NFTMetadataKind::CEP78)
-                .with_total_token_supply(2u64);
+                .with_nft_kind(NFTKind::Virtual)
+                .with_nft_metadata_kind(NFTMetadataKind::Raw)
+                .with_identifier_mode(NFTIdentifierMode::Hash)
+                .with_metadata_mutability(MetadataMutability::Immutable)
+                .with_events_mode(EventsMode::CES)
+                .with_minting_mode(MintingMode::Acl)
+                .with_whitelist_mode(WhitelistMode::Unlocked)
+                .with_acl_whitelist(vec![Key::Account(*DEFAULT_ACCOUNT_ADDR)]);
+        
         builder
             .exec(install_request_builder.build())
             .expect_success()
