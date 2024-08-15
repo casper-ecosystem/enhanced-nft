@@ -37,31 +37,7 @@ use casper_types::{
     RuntimeArgs, Tagged,
 };
 use constants::{
-    ACCESS_KEY_NAME_1_0_0, ACL_PACKAGE_MODE, ACL_WHITELIST, ALLOW_MINTING, APPROVED,
-    ARG_ACCESS_KEY_NAME_1_0_0, ARG_ACL_PACKAGE_MODE, ARG_ACL_WHITELIST,
-    ARG_ADDITIONAL_REQUIRED_METADATA, ARG_ALLOW_MINTING, ARG_APPROVE_ALL, ARG_BURN_MODE,
-    ARG_COLLECTION_NAME, ARG_COLLECTION_SYMBOL, ARG_CONTRACT_WHITELIST, ARG_EVENTS_MODE,
-    ARG_HASH_KEY_NAME_1_0_0, ARG_HOLDER_MODE, ARG_IDENTIFIER_MODE, ARG_JSON_SCHEMA,
-    ARG_METADATA_MUTABILITY, ARG_MINTING_MODE, ARG_NAMED_KEY_CONVENTION, ARG_NFT_KIND,
-    ARG_NFT_METADATA_KIND, ARG_NFT_PACKAGE_KEY, ARG_OPERATOR, ARG_OPERATOR_BURN_MODE,
-    ARG_OPTIONAL_METADATA, ARG_OWNERSHIP_MODE, ARG_OWNER_LOOKUP_MODE, ARG_PACKAGE_OPERATOR_MODE,
-    ARG_RECEIPT_NAME, ARG_SOURCE_KEY, ARG_SPENDER, ARG_TARGET_KEY, ARG_TOKEN_HASH, ARG_TOKEN_ID,
-    ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER, ARG_TOTAL_TOKEN_SUPPLY, ARG_TRANSFER_FILTER_CONTRACT,
-    ARG_WHITELIST_MODE, BURNT_TOKENS, BURN_MODE, COLLECTION_NAME, COLLECTION_SYMBOL,
-    ENTRY_POINT_APPROVE, ENTRY_POINT_BALANCE_OF, ENTRY_POINT_BURN, ENTRY_POINT_GET_APPROVED,
-    ENTRY_POINT_INIT, ENTRY_POINT_IS_APPROVED_FOR_ALL, ENTRY_POINT_METADATA, ENTRY_POINT_MIGRATE,
-    ENTRY_POINT_MINT, ENTRY_POINT_OWNER_OF, ENTRY_POINT_REGISTER_OWNER, ENTRY_POINT_REVOKE,
-    ENTRY_POINT_SET_APPROVALL_FOR_ALL, ENTRY_POINT_SET_TOKEN_METADATA, ENTRY_POINT_SET_VARIABLES,
-    ENTRY_POINT_TRANSFER, ENTRY_POINT_UPDATED_RECEIPTS, EVENTS_MODE, HASH_BY_INDEX,
-    HASH_KEY_NAME_1_0_0, HOLDER_MODE, IDENTIFIER_MODE, INDEX_BY_HASH, INSTALLER, JSON_SCHEMA,
-    MAX_TOTAL_TOKEN_SUPPLY, METADATA_CEP78, METADATA_CUSTOM_VALIDATED, METADATA_MUTABILITY,
-    METADATA_NFT721, METADATA_RAW, MINTING_MODE, NFT_KIND, NFT_METADATA_KIND, NFT_METADATA_KINDS,
-    NUMBER_OF_MINTED_TOKENS, OPERATOR, OPERATORS, OPERATOR_BURN_MODE, OWNED_TOKENS, OWNERSHIP_MODE,
-    PACKAGE_OPERATOR_MODE, PAGE_LIMIT, PAGE_TABLE, PREFIX_ACCESS_KEY_NAME, PREFIX_CEP78,
-    PREFIX_CONTRACT_NAME, PREFIX_CONTRACT_VERSION, PREFIX_HASH_KEY_NAME, PREFIX_PAGE_DICTIONARY,
-    RECEIPT_NAME, REPORTING_MODE, RLO_MFLAG, TOKEN_COUNT, TOKEN_ISSUERS, TOKEN_OWNERS,
-    TOTAL_TOKEN_SUPPLY, TRANSFER_FILTER_CONTRACT, TRANSFER_FILTER_CONTRACT_METHOD,
-    UNMATCHED_HASH_COUNT, WHITELIST_MODE,
+    ACCESS_KEY_NAME_1_0_0, ACL_PACKAGE_MODE, ACL_WHITELIST, ALLOW_MINTING, APPROVED, ARG_ACCESS_KEY_NAME_1_0_0, ARG_ACL_PACKAGE_MODE, ARG_ACL_WHITELIST, ARG_ADDITIONAL_REQUIRED_METADATA, ARG_ALLOW_MINTING, ARG_APPROVE_ALL, ARG_BURN_MODE, ARG_COLLECTION_NAME, ARG_COLLECTION_SYMBOL, ARG_CONTRACT_WHITELIST, ARG_EVENTS_MODE, ARG_HASH_KEY_NAME_1_0_0, ARG_HOLDER_MODE, ARG_IDENTIFIER_MODE, ARG_JSON_SCHEMA, ARG_METADATA_MUTABILITY, ARG_MIGRATE, ARG_MINTING_MODE, ARG_NAMED_KEY_CONVENTION, ARG_NFT_KIND, ARG_NFT_METADATA_KIND, ARG_NFT_PACKAGE_KEY, ARG_OPERATOR, ARG_OPERATOR_BURN_MODE, ARG_OPTIONAL_METADATA, ARG_OWNERSHIP_MODE, ARG_OWNER_LOOKUP_MODE, ARG_PACKAGE_OPERATOR_MODE, ARG_RECEIPT_NAME, ARG_SOURCE_KEY, ARG_SPENDER, ARG_TARGET_KEY, ARG_TOKEN_HASH, ARG_TOKEN_ID, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER, ARG_TOTAL_TOKEN_SUPPLY, ARG_TRANSFER_FILTER_CONTRACT, ARG_WHITELIST_MODE, BURNT_TOKENS, BURN_MODE, COLLECTION_NAME, COLLECTION_SYMBOL, CONDOR, ENTRY_POINT_APPROVE, ENTRY_POINT_BALANCE_OF, ENTRY_POINT_BURN, ENTRY_POINT_GET_APPROVED, ENTRY_POINT_INIT, ENTRY_POINT_IS_APPROVED_FOR_ALL, ENTRY_POINT_METADATA, ENTRY_POINT_MIGRATE, ENTRY_POINT_MINT, ENTRY_POINT_OWNER_OF, ENTRY_POINT_REGISTER_OWNER, ENTRY_POINT_REVOKE, ENTRY_POINT_SET_APPROVALL_FOR_ALL, ENTRY_POINT_SET_TOKEN_METADATA, ENTRY_POINT_SET_VARIABLES, ENTRY_POINT_TRANSFER, ENTRY_POINT_UPDATED_RECEIPTS, EVENTS_MODE, HASH_BY_INDEX, HASH_KEY_NAME_1_0_0, HOLDER_MODE, IDENTIFIER_MODE, INDEX_BY_HASH, INSTALLER, JSON_SCHEMA, MAX_TOTAL_TOKEN_SUPPLY, METADATA_CEP78, METADATA_CUSTOM_VALIDATED, METADATA_MUTABILITY, METADATA_NFT721, METADATA_RAW, MINTING_MODE, NFT_KIND, NFT_METADATA_KIND, NFT_METADATA_KINDS, NUMBER_OF_MINTED_TOKENS, OPERATOR, OPERATORS, OPERATOR_BURN_MODE, OWNED_TOKENS, OWNERSHIP_MODE, PACKAGE_OPERATOR_MODE, PAGE_LIMIT, PAGE_TABLE, PREFIX_ACCESS_KEY_NAME, PREFIX_CEP78, PREFIX_CONTRACT_NAME, PREFIX_CONTRACT_VERSION, PREFIX_HASH_KEY_NAME, PREFIX_PAGE_DICTIONARY, RECEIPT_NAME, REPORTING_MODE, RLO_MFLAG, TOKEN_COUNT, TOKEN_ISSUERS, TOKEN_OWNERS, TOTAL_TOKEN_SUPPLY, TRANSFER_FILTER_CONTRACT, TRANSFER_FILTER_CONTRACT_METHOD, UNMATCHED_HASH_COUNT, WHITELIST_MODE
 };
 use core::convert::{TryFrom, TryInto};
 use error::NFTCoreError;
@@ -415,7 +391,7 @@ pub extern "C" fn init() {
     .unwrap_or_revert();
 
     // Initialize events structures for CES.
-    if [EventsMode::CES, EventsMode::NativeNCES, EventsMode::All].contains(&events_mode) {
+    if [EventsMode::CES, EventsMode::NativeBytes, EventsMode::All].contains(&events_mode) {
         utils::init_events();
     }
     runtime::put_key(EVENTS_MODE, storage::new_uref(events_mode as u8).into());
@@ -616,7 +592,7 @@ pub extern "C" fn set_variables() {
         EventsMode::CES => casper_event_standard::emit(VariablesSet::new()),
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             record_cep47_event_dictionary(CEP47Event::VariablesSet);
             casper_event_standard::emit(VariablesSet::new());
@@ -871,7 +847,7 @@ pub extern "C" fn mint() {
         }),
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             casper_event_standard::emit(Mint::new(
                 token_owner_key,
@@ -1030,7 +1006,7 @@ pub extern "C" fn burn() {
         }),
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             casper_event_standard::emit(Burn::new(token_owner, &token_identifier, caller));
             record_cep47_event_dictionary(CEP47Event::Burn {
@@ -1171,7 +1147,7 @@ pub extern "C" fn approve() {
         }),
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             casper_event_standard::emit(Approval::new(owner, spender, &token_id));
             record_cep47_event_dictionary(CEP47Event::ApprovalGranted {
@@ -1292,7 +1268,7 @@ pub extern "C" fn revoke() {
         }
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             casper_event_standard::emit(ApprovalRevoked::new(owner, &token_id));
             record_cep47_event_dictionary(CEP47Event::ApprovalRevoked { owner, token_id });
@@ -1370,7 +1346,7 @@ pub extern "C" fn set_approval_for_all() {
         }
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {
+        EventsMode::NativeBytes => {
             if approve_all {
                 casper_event_standard::emit(ApprovalForAll::new(caller, operator));
             } else {
@@ -1672,7 +1648,7 @@ pub extern "C" fn transfer() {
         }
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             record_cep47_event_dictionary(CEP47Event::Transfer {
                 sender: caller,
@@ -1977,7 +1953,7 @@ pub extern "C" fn set_token_metadata() {
         }),
         EventsMode::Native => {}
         EventsMode::Native47 => {}
-        EventsMode::NativeNCES => {}
+        EventsMode::NativeBytes => {}
         EventsMode::All => {
             casper_event_standard::emit(MetadataUpdated::new(
                 &token_identifier,
@@ -2148,7 +2124,7 @@ pub extern "C" fn migrate() {
             (_, EventsMode::CEP47) => record_cep47_event_dictionary(CEP47Event::Migrate),
             (_, EventsMode::Native) => {}
             (_, EventsMode::Native47) => {}
-            (_, EventsMode::NativeNCES) => {
+            (_, EventsMode::NativeBytes) => {
                 utils::init_events();
                 casper_event_standard::emit(Migration::new());
             }
@@ -2233,6 +2209,8 @@ pub extern "C" fn migrate() {
         storage::new_dictionary(OPERATORS)
             .unwrap_or_revert_with(NFTCoreError::FailedToCreateDictionary);
     }
+
+    runtime::put_key(CONDOR, storage::new_uref(CONDOR).into());
 
     utils::migrate_contract_whitelist_to_acl_whitelist();
 }
@@ -3049,7 +3027,21 @@ pub extern "C" fn call() {
         .unwrap_or_revert();
 
     match convention_mode {
-        NamedKeyConventionMode::DerivedFromCollectionName => install_contract(),
+        NamedKeyConventionMode::DerivedFromCollectionName =>{
+            if let Ok(migrate) = utils::get_named_arg_with_user_errors::<u8>(ARG_MIGRATE, NFTCoreError::MissingMigrationFlag, NFTCoreError::InvalidMigrationFlag){
+                match migrate{
+                    _ => {
+                        let collection_name : String = utils::get_stored_value_with_user_errors(COLLECTION_NAME, NFTCoreError::MissingCollectionName, NFTCoreError::InvalidCollectionName);
+                        migrate_contract(
+                            format!("{}_{}", PREFIX_HASH_KEY_NAME, collection_name),
+                            format!("{}_{}", PREFIX_ACCESS_KEY_NAME, collection_name),
+                        )
+                    }
+                }
+            }else{
+                install_contract()
+            }
+        },
         NamedKeyConventionMode::V1_0Standard => migrate_contract(
             ACCESS_KEY_NAME_1_0_0.to_string(),
             HASH_KEY_NAME_1_0_0.to_string(),

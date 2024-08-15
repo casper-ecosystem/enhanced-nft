@@ -1,11 +1,11 @@
 use crate::utility::{
     constants::{
         ACCOUNT_1_ADDR, ACCOUNT_1_KEY, ARG_NFT_CONTRACT_HASH, ARG_REVERSE_LOOKUP,
-        CONTRACT_1_0_0_WASM, DEFAULT_ACCOUNT_KEY, MINTING_CONTRACT_VERSION, MINTING_CONTRACT_WASM,
-        NFT_CONTRACT_WASM, NFT_TEST_COLLECTION, NFT_TEST_SYMBOL, TEST_PRETTY_721_META_DATA,
+        DEFAULT_ACCOUNT_KEY, MINTING_CONTRACT_VERSION, MINTING_CONTRACT_WASM,
+        NFT_CONTRACT_WASM, TEST_PRETTY_721_META_DATA,
     },
     installer_request_builder::{
-        InstallerRequestBuilder, MintingMode, NFTHolderMode, NFTMetadataKind,
+        InstallerRequestBuilder, MintingMode, NFTHolderMode,
         OwnerReverseLookupMode, OwnershipMode, WhitelistMode,
     },
     support::{
@@ -20,14 +20,13 @@ use casper_types::{
     contracts::{ContractHash, ContractPackageHash},
     runtime_args, Key,
 };
-use contract::{
+use contract::
     constants::{
-        ACL_WHITELIST, ARG_ACL_WHITELIST, ARG_COLLECTION_NAME, ARG_CONTRACT_WHITELIST,
-        ARG_MINTING_MODE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER,
+        ACL_WHITELIST, ARG_ACL_WHITELIST, ARG_CONTRACT_WHITELIST,
+        ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER,
         ENTRY_POINT_MINT, ENTRY_POINT_SET_VARIABLES, TOKEN_OWNERS,
-    },
-    modalities::NamedKeyConventionMode,
-};
+    }
+;
 
 // Install
 
@@ -1284,93 +1283,4 @@ fn should_be_able_to_update_whitelist_for_minting() {
         .exec(mint_via_contract_call)
         .expect_success()
         .commit();
-}
-
-// Upgrade
-
-// todo
-// #[test]
-fn should_upgrade_from_named_keys_to_dict_and_acl_minting_mode() {
-    let mut builder = genesis();
-
-    let minting_contract_install_request = ExecuteRequestBuilder::standard(
-        *DEFAULT_ACCOUNT_ADDR,
-        MINTING_CONTRACT_WASM,
-        runtime_args! {},
-    )
-    .build();
-
-    builder
-        .exec(minting_contract_install_request)
-        .expect_success()
-        .commit();
-
-    let minting_contract_hash = get_minting_contract_hash(&builder);
-    let contract_whitelist = vec![minting_contract_hash];
-
-    let install_request = InstallerRequestBuilder::new(*DEFAULT_ACCOUNT_ADDR, CONTRACT_1_0_0_WASM)
-        .with_collection_name(NFT_TEST_COLLECTION.to_string())
-        .with_collection_symbol(NFT_TEST_SYMBOL.to_string())
-        .with_total_token_supply(1000u64)
-        .with_minting_mode(MintingMode::Installer)
-        .with_holder_mode(NFTHolderMode::Contracts)
-        .with_whitelist_mode(WhitelistMode::Locked)
-        .with_ownership_mode(OwnershipMode::Transferable)
-        .with_nft_metadata_kind(NFTMetadataKind::Raw)
-        .with_reporting_mode(OwnerReverseLookupMode::NoLookUp)
-        .with_contract_whitelist(contract_whitelist)
-        .build();
-
-    builder.exec(install_request).expect_success().commit();
-
-    let nft_contract_hash_1_0_0 = support::get_nft_contract_hash_1_0_0(&builder);
-    let nft_contract_key_1_0_0: Key = nft_contract_hash_1_0_0.into();
-
-    let minting_mode = support::query_stored_value::<u8>(
-        &builder,
-        nft_contract_key_1_0_0,
-        vec![ARG_MINTING_MODE.to_string()],
-    );
-
-    assert_eq!(
-        minting_mode,
-        MintingMode::Installer as u8,
-        "minting mode should be set to public"
-    );
-
-    let upgrade_request = ExecuteRequestBuilder::standard(
-        *DEFAULT_ACCOUNT_ADDR,
-        NFT_CONTRACT_WASM,
-        runtime_args! {
-            ARG_NFT_CONTRACT_HASH => support::get_nft_contract_package_hash(&builder),
-            ARG_COLLECTION_NAME => NFT_TEST_COLLECTION.to_string(),
-            ARG_NAMED_KEY_CONVENTION => NamedKeyConventionMode::V1_0Standard as u8,
-        },
-    )
-    .build();
-
-    builder.exec(upgrade_request).expect_success().commit();
-
-    let nft_contract_key: Key = support::get_nft_contract_entity_hash_key(&builder);
-
-    let is_updated_acl_whitelist = get_dictionary_value_from_key::<bool>(
-        &builder,
-        &nft_contract_key,
-        ACL_WHITELIST,
-        &minting_contract_hash.to_string(),
-    );
-
-    assert!(is_updated_acl_whitelist, "acl whitelist is incorrectly set");
-
-    let minting_mode = support::query_stored_value::<u8>(
-        &builder,
-        nft_contract_key,
-        vec![ARG_MINTING_MODE.to_string()],
-    );
-
-    assert_eq!(
-        minting_mode,
-        MintingMode::Acl as u8,
-        "minting mode should be set to acl"
-    );
 }
