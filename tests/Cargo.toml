@@ -17,3 +17,4 @@ casper-types = { git = "https://github.com/casper-network/casper-node.git", bran
 casper-engine-test-support = { git = "https://github.com/casper-network/casper-node.git", branch = "feat-2.0", default-features = false}
 casper-execution-engine = { git = "https://github.com/casper-network/casper-node.git", branch = "feat-2.0", default-features = false}
 casper-storage = { git = "https://github.com/casper-network/casper-node.git", branch = "feat-2.0", default-features = false}
+casper-fixtures = { git = "https://github.com/deuszex/casper-fixtures", branch = "feat-2.0"}
