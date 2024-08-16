@@ -21,7 +21,6 @@ pub const ARG_HOLDER_MODE: &str = "holder_mode";
 pub const ARG_IDENTIFIER_MODE: &str = "identifier_mode";
 pub const ARG_JSON_SCHEMA: &str = "json_schema";
 pub const ARG_METADATA_MUTABILITY: &str = "metadata_mutability";
-pub const ARG_MIGRATE: &str = "migrate";
 pub const ARG_MINTING_MODE: &str = "minting_mode";
 pub const ARG_NAMED_KEY_CONVENTION: &str = "named_key_convention";
 pub const ARG_NFT_KIND: &str = "nft_kind";

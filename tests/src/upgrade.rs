@@ -3,11 +3,21 @@ use casper_engine_test_support::{
 };
 use casper_fixtures::LmdbFixtureState;
 use casper_types::{
-    bytesrepr::FromBytes, runtime_args, system::MINT, AddressableEntityHash, CLTyped, EraId, Key, ProtocolVersion,
+    bytesrepr::FromBytes, runtime_args, system::MINT, AddressableEntityHash, CLTyped, EraId, Key,
+    ProtocolVersion,
 };
-use contract::{constants::{ARG_COLLECTION_NAME, ARG_COLLECTION_SYMBOL, ARG_EVENTS_MODE, ARG_MIGRATE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER}, modalities::{EventsMode, NamedKeyConventionMode}};
+use contract::{
+    constants::{ARG_COLLECTION_NAME, ARG_EVENTS_MODE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER, COLLECTION_NAME},
+    modalities::{EventsMode, NamedKeyConventionMode},
+};
 
-use crate::utility::{constants::{ARG_NFT_CONTRACT_HASH, ARG_NFT_CONTRACT_PACKAGE_HASH, CONTRACT_NAME, CONTRACT_VERSION, NFT_CONTRACT_WASM, NFT_TEST_COLLECTION, NFT_TEST_SYMBOL}, support::get_nft_contract_package_hash_cep78};
+use crate::utility::{
+    constants::{
+        ARG_NFT_CONTRACT_HASH, ARG_NFT_CONTRACT_PACKAGE_HASH, CONTRACT_NAME, CONTRACT_VERSION,
+        NFT_CONTRACT_WASM, NFT_TEST_COLLECTION,
+    },
+    support::get_nft_contract_package_hash_cep78,
+};
 
 pub fn upgrade_v1_5_6_fixture_to_v2_0_0_ee(
     builder: &mut LmdbWasmTestBuilder,
@@ -119,8 +129,7 @@ fn should_migrate_1_5_6_to_feat_2_0() {
     // upgrade engine
     upgrade_v1_5_6_fixture_to_v2_0_0_ee(&mut builder, &lmdb_fixture_state);
 
-    let version_0: u32 =
-        query_contract_value(&builder, &[CONTRACT_VERSION.to_string()]);
+    let version_0: u32 = query_contract_value(&builder, &[CONTRACT_VERSION.to_string()]);
     let contract_package_hash = get_nft_contract_package_hash_cep78(&builder);
 
     // upgrade the contract itself using a binary built for the new engine
@@ -131,15 +140,14 @@ fn should_migrate_1_5_6_to_feat_2_0() {
             ARG_NFT_CONTRACT_PACKAGE_HASH => contract_package_hash,
             ARG_EVENTS_MODE => EventsMode::CES as u8,
             ARG_NAMED_KEY_CONVENTION => NamedKeyConventionMode::DerivedFromCollectionName as u8,
-            ARG_MIGRATE => 0_u8
+            ARG_COLLECTION_NAME => NFT_TEST_COLLECTION,
         },
     )
     .build();
 
     builder.exec(upgrade_request).expect_success().commit();
 
-    let version_1: u32 =
-        query_contract_value(&builder, &[CONTRACT_VERSION.to_string()]);
+    let version_1: u32 = query_contract_value(&builder, &[CONTRACT_VERSION.to_string()]);
 
     assert!(version_0 < version_1);
 
@@ -160,4 +168,3 @@ fn should_migrate_1_5_6_to_feat_2_0() {
 
     builder.exec(mint_request).expect_success().commit();
 }
-

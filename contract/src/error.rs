@@ -180,6 +180,7 @@ pub enum NFTCoreError {
     UnlistedEntity = 175,
     FailedToConvertToEntityHash = 176,
     InvalidMinterEntity = 177,
+    FailedToConvertEventToJson = 178,
 }
 
 impl From<NFTCoreError> for ApiError {

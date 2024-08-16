@@ -1,8 +1,5 @@
 use casper_engine_test_support::DEFAULT_ACCOUNT_ADDR;
-use casper_types::{
-    account::AccountHash, Key, PublicKey,
-    SecretKey,
-};
+use casper_types::{account::AccountHash, Key, PublicKey, SecretKey};
 use once_cell::sync::Lazy;
 
 pub const BALANCE_OF_SESSION_WASM: &str = "balance_of_call.wasm";

@@ -2,14 +2,17 @@ use alloc::string::{String, ToString};
 
 use casper_event_standard::Event;
 use casper_types::Key;
+use serde::{Deserialize, Serialize};
 
 use crate::modalities::TokenIdentifier;
 
-#[derive(Event, Debug, PartialEq, Eq)]
+use super::Event;
+
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct Mint {
-    recipient: Key,
-    token_id: String,
-    data: String,
+    pub recipient: Key,
+    pub token_id: String,
+    pub data: String,
 }
 
 impl Mint {
@@ -22,11 +25,11 @@ impl Mint {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct Burn {
-    owner: Key,
-    token_id: String,
-    burner: Key,
+    pub owner: Key,
+    pub token_id: String,
+    pub burner: Key,
 }
 
 impl Burn {
@@ -39,11 +42,11 @@ impl Burn {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct Approval {
-    owner: Key,
-    spender: Key,
-    token_id: String,
+    pub owner: Key,
+    pub spender: Key,
+    pub token_id: String,
 }
 
 impl Approval {
@@ -56,10 +59,10 @@ impl Approval {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct ApprovalRevoked {
-    owner: Key,
-    token_id: String,
+    pub owner: Key,
+    pub token_id: String,
 }
 
 impl ApprovalRevoked {
@@ -71,10 +74,10 @@ impl ApprovalRevoked {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct ApprovalForAll {
-    owner: Key,
-    operator: Key,
+    pub owner: Key,
+    pub operator: Key,
 }
 
 impl ApprovalForAll {
@@ -83,10 +86,10 @@ impl ApprovalForAll {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct RevokedForAll {
-    owner: Key,
-    operator: Key,
+    pub owner: Key,
+    pub operator: Key,
 }
 
 impl RevokedForAll {
@@ -95,12 +98,12 @@ impl RevokedForAll {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct Transfer {
-    owner: Key,
-    spender: Option<Key>,
-    recipient: Key,
-    token_id: String,
+    pub owner: Key,
+    pub spender: Option<Key>,
+    pub recipient: Key,
+    pub token_id: String,
 }
 
 impl Transfer {
@@ -119,10 +122,10 @@ impl Transfer {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq)]
 pub struct MetadataUpdated {
-    token_id: String,
-    data: String,
+    pub token_id: String,
+    pub data: String,
 }
 
 impl MetadataUpdated {
@@ -134,7 +137,7 @@ impl MetadataUpdated {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq, Default)]
 pub struct VariablesSet {}
 
 impl VariablesSet {
@@ -143,11 +146,26 @@ impl VariablesSet {
     }
 }
 
-#[derive(Event, Debug, PartialEq, Eq, Default)]
+#[derive(Serialize, Deserialize, Event, Debug, PartialEq, Eq, Default)]
 pub struct Migration {}
 
 impl Migration {
     pub fn new() -> Self {
         Self {}
+    }
+}
+
+pub fn emit_ces(event: Event) {
+    match event {
+        Event::Mint(e) => casper_event_standard::emit(e),
+        Event::Burn(e) => casper_event_standard::emit(e),
+        Event::Approval(e) => casper_event_standard::emit(e),
+        Event::ApprovalForAll(e) => casper_event_standard::emit(e),
+        Event::ApprovalRevoked(e) => casper_event_standard::emit(e),
+        Event::Transfer(e) => casper_event_standard::emit(e),
+        Event::MetadataUpdated(e) => casper_event_standard::emit(e),
+        Event::Migration(e) => casper_event_standard::emit(e),
+        Event::RevokedForAll(e) => casper_event_standard::emit(e),
+        Event::VariablesSet(e) => casper_event_standard::emit(e),
     }
 }

@@ -1,6 +1,7 @@
 use super::{
     constants::{
-        ACCOUNT_1_PUBLIC_KEY, ACCOUNT_2_PUBLIC_KEY, ACCOUNT_3_PUBLIC_KEY, CONTRACT_PACKAGE, MINTING_CONTRACT_PACKAGE_NAME
+        ACCOUNT_1_PUBLIC_KEY, ACCOUNT_2_PUBLIC_KEY, ACCOUNT_3_PUBLIC_KEY, CONTRACT_PACKAGE,
+        MINTING_CONTRACT_PACKAGE_NAME,
     },
     installer_request_builder::InstallerRequestBuilder,
 };
@@ -90,7 +91,9 @@ pub(crate) fn get_nft_contract_package_hash(builder: &LmdbWasmTestBuilder) -> Co
     ContractPackageHash::new(nft_hash_addr)
 }
 
-pub(crate) fn get_nft_contract_package_hash_cep78(builder: &LmdbWasmTestBuilder) -> ContractPackageHash {
+pub(crate) fn get_nft_contract_package_hash_cep78(
+    builder: &LmdbWasmTestBuilder,
+) -> ContractPackageHash {
     let nft_hash_addr = builder
         .get_entity_with_named_keys_by_account_hash(*DEFAULT_ACCOUNT_ADDR)
         .unwrap()

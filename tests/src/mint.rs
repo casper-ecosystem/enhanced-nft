@@ -1381,7 +1381,7 @@ fn should_mint_without_returning_receipts_and_flat_gas_cost() {
 
     // In this case there is no first time allocation of a page.
     // Therefore the second and first mints must have equivalent gas costs.
-    assert!(first_mint_gas_cost > second_mint_gas_cost);
+    assert_eq!(first_mint_gas_cost, second_mint_gas_cost);
     assert_eq!(second_mint_gas_cost, third_mint_gas_cost)
 }
 

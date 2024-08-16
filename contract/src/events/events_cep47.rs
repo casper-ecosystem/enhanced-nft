@@ -8,7 +8,7 @@ use casper_contract::{
     contract_api::{runtime, storage},
     unwrap_or_revert::UnwrapOrRevert,
 };
-use casper_types::{ApiError, Key};
+use casper_types::ApiError;
 
 use crate::{
     constants::{
@@ -16,50 +16,12 @@ use crate::{
         SENDER, SPENDER, TOKEN_ID,
     },
     error::NFTCoreError,
-    modalities::TokenIdentifier,
     utils,
 };
 
-pub enum CEP47Event {
-    Mint {
-        recipient: Key,
-        token_id: TokenIdentifier,
-    },
-    Burn {
-        owner: Key,
-        token_id: TokenIdentifier,
-        burner: Key,
-    },
-    ApprovalGranted {
-        owner: Key,
-        spender: Key,
-        token_id: TokenIdentifier,
-    },
-    ApprovalRevoked {
-        owner: Key,
-        token_id: TokenIdentifier,
-    },
-    ApprovalForAll {
-        owner: Key,
-        operator: Key,
-    },
-    RevokedForAll {
-        owner: Key,
-        operator: Key,
-    },
-    Transfer {
-        sender: Key,
-        recipient: Key,
-        token_id: TokenIdentifier,
-    },
-    MetadataUpdate {
-        token_id: TokenIdentifier,
-    },
-    VariablesSet,
-    Migrate,
-}
+use super::Event;
 
-pub fn record_cep47_event_dictionary(event: CEP47Event) {
+pub fn emit_cep47(event: Event) {
     let collection_name: String = utils::get_stored_value_with_user_errors(
         crate::constants::COLLECTION_NAME,
         NFTCoreError::MissingCollectionName,
@@ -73,94 +35,85 @@ pub fn record_cep47_event_dictionary(event: CEP47Event) {
     );
 
     let event: BTreeMap<&str, String> = match event {
-        CEP47Event::Mint {
-            recipient,
-            token_id,
-        } => {
+        Event::Mint(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Mint".to_string());
-            event.insert(RECIPIENT, recipient.to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
+            event.insert(RECIPIENT, event_in.recipient.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
             event
         }
-        CEP47Event::Burn {
-            owner,
-            token_id,
-            burner,
-        } => {
+        Event::Burn(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Burn".to_string());
-            event.insert(OWNER, owner.to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
-            event.insert(BURNER, burner.to_string());
+            event.insert(OWNER, event_in.owner.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(BURNER, event_in.burner.to_string());
             event
         }
-        CEP47Event::ApprovalGranted {
-            owner,
-            spender,
-            token_id,
-        } => {
+        Event::Approval(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Approve".to_string());
-            event.insert(OWNER, owner.to_string());
-            event.insert(SPENDER, spender.to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
+            event.insert(OWNER, event_in.owner.to_string());
+            event.insert(SPENDER, event_in.spender.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
             event
         }
-        CEP47Event::ApprovalRevoked { owner, token_id } => {
+        Event::ApprovalRevoked(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "ApprovalRevoked".to_string());
-            event.insert(OWNER, owner.to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
+            event.insert(OWNER, event_in.owner.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
             event
         }
-        CEP47Event::ApprovalForAll { owner, operator } => {
+        Event::ApprovalForAll(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "ApprovalForAll".to_string());
-            event.insert(OWNER, owner.to_string());
-            event.insert(OPERATOR, operator.to_string());
+            event.insert(OWNER, event_in.owner.to_string());
+            event.insert(OPERATOR, event_in.operator.to_string());
             event
         }
-        CEP47Event::RevokedForAll { owner, operator } => {
+        Event::RevokedForAll(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "RevokedForAll".to_string());
-            event.insert(OWNER, owner.to_string());
-            event.insert(OPERATOR, operator.to_string());
+            event.insert(OWNER, event_in.owner.to_string());
+            event.insert(OPERATOR, event_in.operator.to_string());
             event
         }
-        CEP47Event::Transfer {
-            sender,
-            recipient,
-            token_id,
-        } => {
+        Event::Transfer(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Transfer".to_string());
-            event.insert(SENDER, sender.to_string());
-            event.insert(RECIPIENT, recipient.to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
+            event.insert(
+                SENDER,
+                match event_in.spender {
+                    Some(spender) => spender.to_string(),
+                    None => event_in.owner.to_string(),
+                },
+            );
+            event.insert(RECIPIENT, event_in.recipient.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
             event
         }
-        CEP47Event::MetadataUpdate { token_id } => {
+        Event::MetadataUpdated(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "MetadataUpdate".to_string());
-            event.insert(TOKEN_ID, token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id.to_string());
             event
         }
-        CEP47Event::Migrate => {
+        Event::Migration(_) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Migration".to_string());
             event
         }
-        CEP47Event::VariablesSet => {
+        Event::VariablesSet(_) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "VariablesSet".to_string());

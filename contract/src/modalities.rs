@@ -430,9 +430,7 @@ pub enum EventsMode {
     CEP47 = 1,
     CES = 2,
     Native = 3,
-    Native47 = 4,
-    NativeBytes = 5,
-    All = 6,
+    NativeBytes = 4,
 }
 
 impl TryFrom<u8> for EventsMode {
@@ -444,9 +442,7 @@ impl TryFrom<u8> for EventsMode {
             1 => Ok(EventsMode::CEP47),
             2 => Ok(EventsMode::CES),
             3 => Ok(EventsMode::Native),
-            4 => Ok(EventsMode::Native47),
-            5 => Ok(EventsMode::NativeBytes),
-            6 => Ok(EventsMode::All),
+            4 => Ok(EventsMode::NativeBytes),
             _ => Err(NFTCoreError::InvalidEventsMode),
         }
     }

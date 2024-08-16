@@ -190,7 +190,7 @@ impl InstallerRequestBuilder {
             .unwrap(),
             additional_required_metadata: CLValue::from_t(Bytes::new()).unwrap(),
             optional_metadata: CLValue::from_t(Bytes::new()).unwrap(),
-            events_mode: CLValue::from_t(EventsMode::All as u8).unwrap(),
+            events_mode: CLValue::from_t(EventsMode::CES as u8).unwrap(),
             transfer_filter_contract: None,
         }
     }

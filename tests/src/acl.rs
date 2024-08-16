@@ -1,12 +1,12 @@
 use crate::utility::{
     constants::{
         ACCOUNT_1_ADDR, ACCOUNT_1_KEY, ARG_NFT_CONTRACT_HASH, ARG_REVERSE_LOOKUP,
-        DEFAULT_ACCOUNT_KEY, MINTING_CONTRACT_VERSION, MINTING_CONTRACT_WASM,
-        NFT_CONTRACT_WASM, TEST_PRETTY_721_META_DATA,
+        DEFAULT_ACCOUNT_KEY, MINTING_CONTRACT_VERSION, MINTING_CONTRACT_WASM, NFT_CONTRACT_WASM,
+        TEST_PRETTY_721_META_DATA,
     },
     installer_request_builder::{
-        InstallerRequestBuilder, MintingMode, NFTHolderMode,
-        OwnerReverseLookupMode, OwnershipMode, WhitelistMode,
+        InstallerRequestBuilder, MintingMode, NFTHolderMode, OwnerReverseLookupMode, OwnershipMode,
+        WhitelistMode,
     },
     support::{
         self, assert_expected_error, genesis, get_dictionary_value_from_key,
@@ -20,13 +20,10 @@ use casper_types::{
     contracts::{ContractHash, ContractPackageHash},
     runtime_args, Key,
 };
-use contract::
-    constants::{
-        ACL_WHITELIST, ARG_ACL_WHITELIST, ARG_CONTRACT_WHITELIST,
-        ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER,
-        ENTRY_POINT_MINT, ENTRY_POINT_SET_VARIABLES, TOKEN_OWNERS,
-    }
-;
+use contract::constants::{
+    ACL_WHITELIST, ARG_ACL_WHITELIST, ARG_CONTRACT_WHITELIST, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER,
+    ENTRY_POINT_MINT, ENTRY_POINT_SET_VARIABLES, TOKEN_OWNERS,
+};
 
 // Install
 
