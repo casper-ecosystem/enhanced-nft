@@ -2798,14 +2798,12 @@ pub extern "C" fn call() {
                 Ok(_) => install_contract(),
                 Err(e) => {
                     if e as u8 == NFTCoreError::MissingCollectionSymbol as u8 {
-                        let collection_name = get_named_arg::<String>(
-                            ARG_COLLECTION_NAME
-                        );
+                        let collection_name = get_named_arg::<String>(ARG_COLLECTION_NAME);
                         migrate_contract(
                             format!("{PREFIX_ACCESS_KEY_NAME}_{collection_name}"),
                             format!("{PREFIX_HASH_KEY_NAME}_{collection_name}"),
                         );
-                    }else{
+                    } else {
                         revert(e)
                     }
                 }

@@ -13,7 +13,7 @@ pub fn emit_native_string(event: Event) {
 
 pub fn emit_native_bytes(event: Event) {
     let payload_data = event.to_json();
-    let payload = MessagePayload::from_bytes(&payload_data.as_bytes())
+    let payload = MessagePayload::from_bytes(payload_data.as_bytes())
         .unwrap_or_revert()
         .0;
     runtime::emit_message(EVENTS, &payload).unwrap_or_revert()

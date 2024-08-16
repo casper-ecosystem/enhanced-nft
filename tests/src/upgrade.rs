@@ -7,7 +7,10 @@ use casper_types::{
     ProtocolVersion,
 };
 use contract::{
-    constants::{ARG_COLLECTION_NAME, ARG_EVENTS_MODE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA, ARG_TOKEN_OWNER, COLLECTION_NAME},
+    constants::{
+        ARG_COLLECTION_NAME, ARG_EVENTS_MODE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA,
+        ARG_TOKEN_OWNER, COLLECTION_NAME,
+    },
     modalities::{EventsMode, NamedKeyConventionMode},
 };
 

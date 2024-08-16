@@ -40,7 +40,7 @@ pub fn emit_cep47(event: Event) {
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Mint".to_string());
             event.insert(RECIPIENT, event_in.recipient.to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event
         }
         Event::Burn(event_in) => {
@@ -48,7 +48,7 @@ pub fn emit_cep47(event: Event) {
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "Burn".to_string());
             event.insert(OWNER, event_in.owner.to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event.insert(BURNER, event_in.burner.to_string());
             event
         }
@@ -58,7 +58,7 @@ pub fn emit_cep47(event: Event) {
             event.insert(EVENT_TYPE, "Approve".to_string());
             event.insert(OWNER, event_in.owner.to_string());
             event.insert(SPENDER, event_in.spender.to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event
         }
         Event::ApprovalRevoked(event_in) => {
@@ -66,7 +66,7 @@ pub fn emit_cep47(event: Event) {
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "ApprovalRevoked".to_string());
             event.insert(OWNER, event_in.owner.to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event
         }
         Event::ApprovalForAll(event_in) => {
@@ -97,14 +97,14 @@ pub fn emit_cep47(event: Event) {
                 },
             );
             event.insert(RECIPIENT, event_in.recipient.to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event
         }
         Event::MetadataUpdated(event_in) => {
             let mut event = BTreeMap::new();
             event.insert(PREFIX_HASH_KEY_NAME, package);
             event.insert(EVENT_TYPE, "MetadataUpdate".to_string());
-            event.insert(TOKEN_ID, event_in.token_id.to_string());
+            event.insert(TOKEN_ID, event_in.token_id);
             event
         }
         Event::Migration(_) => {
