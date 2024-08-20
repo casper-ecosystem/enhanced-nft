@@ -141,7 +141,7 @@ fn should_record_cep47_dictionary_style_transfer_token_event_in_hash_identifier_
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => owner
@@ -298,7 +298,7 @@ fn should_record_cep47_dictionary_style_metadata_update_event_for_nft721_using_t
 
     let update_metadata_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        get_nft_contract_hash(&builder).into(),
+        get_nft_contract_hash(&builder),
         ENTRY_POINT_SET_TOKEN_METADATA,
         update_metadata_runtime_args,
     )
@@ -387,7 +387,7 @@ fn should_cep47_dictionary_style_burn_event() {
     builder.exec(mint_session_call).expect_success().commit();
 
     let token_page =
-        get_token_page_by_id(&builder, &nft_contract_key, &*DEFAULT_ACCOUNT_KEY, token_id);
+        get_token_page_by_id(&builder, &nft_contract_key, &DEFAULT_ACCOUNT_KEY, token_id);
 
     assert!(token_page[0]);
 
@@ -425,7 +425,7 @@ fn should_cep47_dictionary_style_burn_event() {
         &builder,
         &nft_contract_key,
         TOKEN_COUNT,
-        &*DEFAULT_ACCOUNT_ADDR.to_string(),
+        &DEFAULT_ACCOUNT_ADDR.to_string(),
     );
 
     let expected_balance = 0u64;
@@ -502,7 +502,7 @@ fn should_cep47_dictionary_style_approve_event_in_hash_identifier_mode() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_HASH => token_hash.clone(),
@@ -589,7 +589,7 @@ fn should_cep47_dictionary_style_approvall_for_all_event() {
 
     let set_approve_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -680,7 +680,7 @@ fn should_cep47_dictionary_style_revoked_for_all_event() {
 
     let set_approve_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -771,7 +771,7 @@ fn should_not_have_events_dicts_in_no_events_mode() {
 
     // Check dict from EventsMode::CEP47
     let contract = builder
-        .get_entity_with_named_keys_by_entity_hash(contract_hash.into())
+        .get_entity_with_named_keys_by_entity_hash(contract_hash)
         .expect("should have contract");
     let named_keys = contract.named_keys();
     let events = named_keys.get(EVENTS);

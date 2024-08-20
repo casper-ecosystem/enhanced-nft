@@ -9,7 +9,7 @@ use casper_types::{
 use contract::{
     constants::{
         ARG_COLLECTION_NAME, ARG_EVENTS_MODE, ARG_NAMED_KEY_CONVENTION, ARG_TOKEN_META_DATA,
-        ARG_TOKEN_OWNER, COLLECTION_NAME,
+        ARG_TOKEN_OWNER,
     },
     modalities::{EventsMode, NamedKeyConventionMode},
 };

@@ -67,7 +67,7 @@ pub extern "C" fn mint() {
     }
     if reverse_lookup_enabled {
         runtime::call_contract::<(String, URef)>(
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_REGISTER_OWNER,
             runtime_args! {
                 ARG_TOKEN_OWNER => token_owner,
@@ -76,7 +76,7 @@ pub extern "C" fn mint() {
 
         let (collection_name, owned_tokens_dictionary_key, _token_id_string) =
             runtime::call_contract::<(String, Key, String)>(
-                nft_contract_hash.into(),
+                nft_contract_hash,
                 ENTRY_POINT_MINT,
                 runtime_args! {
                     ARG_TOKEN_HASH => token_hash,
@@ -88,7 +88,7 @@ pub extern "C" fn mint() {
         runtime::put_key(&collection_name, owned_tokens_dictionary_key)
     } else {
         runtime::call_contract::<()>(
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_MINT,
             runtime_args! {
                 ARG_TOKEN_HASH => token_hash,
@@ -110,7 +110,7 @@ pub extern "C" fn approve() {
     let spender_key = runtime::get_named_arg::<Key>(ARG_SPENDER);
 
     runtime::call_contract::<()>(
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -129,7 +129,7 @@ pub extern "C" fn revoke() {
     let token_id = runtime::get_named_arg::<u64>(ARG_TOKEN_ID);
 
     runtime::call_contract::<()>(
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REVOKE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -149,7 +149,7 @@ pub extern "C" fn transfer() {
     let target_token_owner = runtime::get_named_arg::<Key>(ARG_TARGET_KEY);
 
     let (collection_name, owned_tokens_dictionary_key) = runtime::call_contract::<(String, Key)>(
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_TRANSFER,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -171,7 +171,7 @@ pub extern "C" fn burn() {
     let token_id = runtime::get_named_arg::<u64>(ARG_TOKEN_ID);
 
     runtime::call_contract::<()>(
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_BURN,
         runtime_args! {
             ARG_TOKEN_ID => token_id
@@ -189,7 +189,7 @@ pub extern "C" fn metadata() {
     let metadata: String = if runtime::get_named_arg::<bool>(ARG_IS_HASH_IDENTIFIER_MODE) {
         let token_hash = runtime::get_named_arg::<String>(ARG_TOKEN_HASH);
         runtime::call_contract::<String>(
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_METADATA,
             runtime_args! {
                 ARG_TOKEN_HASH => token_hash
@@ -198,7 +198,7 @@ pub extern "C" fn metadata() {
     } else {
         let token_id = runtime::get_named_arg::<u64>(ARG_TOKEN_ID);
         runtime::call_contract::<String>(
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_METADATA,
             runtime_args! {
                 ARG_TOKEN_ID => token_id
@@ -218,7 +218,7 @@ pub extern "C" fn register_contract() {
     let token_owner = runtime::get_named_arg::<Key>(ARG_TOKEN_OWNER);
 
     runtime::call_contract::<(String, URef)>(
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_owner

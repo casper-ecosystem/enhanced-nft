@@ -6,7 +6,7 @@ extern crate alloc;
 use alloc::string::String;
 
 use casper_contract::{contract_api::runtime, unwrap_or_revert::UnwrapOrRevert};
-use casper_types::{contracts::ContractHash, runtime_args, AddressableEntityHash, ApiError, Key};
+use casper_types::{runtime_args, AddressableEntityHash, ApiError, Key};
 
 const ENTRY_POINT_TRANSFER: &str = "transfer";
 

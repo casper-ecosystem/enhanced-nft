@@ -1,3 +1,4 @@
+#![allow(unused)]
 use super::{
     constants::{
         ACCOUNT_1_PUBLIC_KEY, ACCOUNT_2_PUBLIC_KEY, ACCOUNT_3_PUBLIC_KEY, CONTRACT_PACKAGE,

@@ -164,7 +164,7 @@ fn entry_points_with_ret_should_return_correct_value() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -780,7 +780,7 @@ fn should_set_approval_for_all() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -1291,7 +1291,7 @@ fn should_approve_in_hash_identifier_mode() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_HASH => token_hash.clone(),
@@ -1333,7 +1333,7 @@ fn should_mint_without_returning_receipts_and_flat_gas_cost() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1349,7 +1349,7 @@ fn should_mint_without_returning_receipts_and_flat_gas_cost() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1365,7 +1365,7 @@ fn should_mint_without_returning_receipts_and_flat_gas_cost() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1432,7 +1432,7 @@ fn should_maintain_page_table_despite_invoking_register_owner() {
     // and ensure that the page table doesn't mutate.
     let register_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => *DEFAULT_ACCOUNT_KEY
@@ -1473,7 +1473,7 @@ fn should_prevent_mint_to_unregistered_owner() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1682,7 +1682,7 @@ fn should_mint_with_transfer_only_reporting() {
 
     let minting_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -1724,7 +1724,7 @@ fn should_approve_all_in_hash_identifier_mode() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1738,7 +1738,7 @@ fn should_approve_all_in_hash_identifier_mode() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         runtime_args! {
             ARG_NFT_CONTRACT_HASH => nft_contract_key,
@@ -1752,7 +1752,7 @@ fn should_approve_all_in_hash_identifier_mode() {
 
     let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
