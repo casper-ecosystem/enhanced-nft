@@ -123,7 +123,7 @@ fn transfer_costs_should_remain_stable() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => Key::Account(AccountHash::new([9u8;32]))

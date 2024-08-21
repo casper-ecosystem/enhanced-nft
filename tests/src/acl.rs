@@ -301,7 +301,7 @@ fn should_disallow_unlisted_account_from_minting() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         account_user_1,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -555,7 +555,7 @@ fn should_allow_mixed_account_contract_to_mint() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         account_user_1,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -697,7 +697,7 @@ fn should_disallow_unlisted_account_from_minting_with_mixed_account_contract() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         account_user_1,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -771,7 +771,7 @@ fn should_disallow_listed_account_from_minting_with_nftholder_contract() {
 
     let mint_session_call = ExecuteRequestBuilder::contract_call_by_hash(
         account_user_1,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -1131,7 +1131,7 @@ fn should_be_able_to_update_whitelist_for_minting_with_deprecated_arg_contract_w
 
     let update_whitelist_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! {
             ARG_CONTRACT_WHITELIST => vec![minting_contract_hash]
@@ -1246,7 +1246,7 @@ fn should_be_able_to_update_whitelist_for_minting() {
 
     let update_whitelist_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! {
             ARG_ACL_WHITELIST => vec![Key::from(minting_contract_hash)]

@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use casper_engine_test_support::{ExecuteRequest, ExecuteRequestBuilder};
 use casper_types::{
     account::AccountHash, bytesrepr::Bytes, contracts::ContractHash, CLValue, Key, RuntimeArgs,

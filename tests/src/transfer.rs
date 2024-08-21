@@ -80,7 +80,7 @@ fn should_dissallow_transfer_with_minter_or_assigned_ownership_mode() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -94,7 +94,7 @@ fn should_dissallow_transfer_with_minter_or_assigned_ownership_mode() {
 
     let transfer_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_TRANSFER,
         runtime_args! {
             ARG_SOURCE_KEY => *DEFAULT_ACCOUNT_KEY,
@@ -166,7 +166,7 @@ fn should_transfer_token_from_sender_to_receiver() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -274,7 +274,7 @@ fn approve_token_for_transfer_should_add_entry_to_approved_dictionary(
     if let Some(operator) = operator {
         let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_SET_APPROVALL_FOR_ALL,
             runtime_args! {
                 ARG_APPROVE_ALL => true,
@@ -292,7 +292,7 @@ fn approve_token_for_transfer_should_add_entry_to_approved_dictionary(
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         approving_account,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -374,7 +374,7 @@ fn revoke_token_for_transfer_should_remove_entry_to_approved_dictionary(
     if let Some(operator) = operator {
         let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_SET_APPROVALL_FOR_ALL,
             runtime_args! {
                 ARG_APPROVE_ALL => true,
@@ -392,7 +392,7 @@ fn revoke_token_for_transfer_should_remove_entry_to_approved_dictionary(
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         approving_account,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -416,7 +416,7 @@ fn revoke_token_for_transfer_should_remove_entry_to_approved_dictionary(
 
     let revoke_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REVOKE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -494,7 +494,7 @@ fn should_dissallow_approving_when_ownership_mode_is_minter_or_assigned() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -550,7 +550,7 @@ fn should_be_able_to_transfer_token(
     if let Some(operator) = operator {
         let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_SET_APPROVALL_FOR_ALL,
             runtime_args! {
                 ARG_APPROVE_ALL => true,
@@ -569,7 +569,7 @@ fn should_be_able_to_transfer_token(
     // Approve spender
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         approving_account,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -597,7 +597,7 @@ fn should_be_able_to_transfer_token(
 
     let register_owner = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => to_account
@@ -686,7 +686,7 @@ fn should_dissallow_same_approved_account_to_transfer_token_twice() {
     // Approve spender
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -715,7 +715,7 @@ fn should_dissallow_same_approved_account_to_transfer_token_twice() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => to_account
@@ -745,7 +745,7 @@ fn should_dissallow_same_approved_account_to_transfer_token_twice() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => to_other_account
@@ -816,7 +816,7 @@ fn should_disallow_to_transfer_token_using_revoked_hash(
     if let Some(operator) = operator {
         let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_SET_APPROVALL_FOR_ALL,
             runtime_args! {
                 ARG_APPROVE_ALL => true,
@@ -835,7 +835,7 @@ fn should_disallow_to_transfer_token_using_revoked_hash(
     // Approve spender
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         approving_account,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -861,7 +861,7 @@ fn should_disallow_to_transfer_token_using_revoked_hash(
     // Create to_account and transfer minted token using account
     let register_owner = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => *ACCOUNT_2_KEY
@@ -874,7 +874,7 @@ fn should_disallow_to_transfer_token_using_revoked_hash(
     // Revoke approval
     let revoke_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REVOKE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -971,7 +971,7 @@ fn should_be_able_to_approve_with_deprecated_operator_argument() {
     // Approve spender
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -1067,7 +1067,7 @@ fn should_transfer_between_contract_to_account() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => *DEFAULT_ACCOUNT_KEY
@@ -1211,7 +1211,7 @@ fn should_transfer_token_in_hash_identifier_mode() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => Key::Account(AccountHash::new([3u8;32]))
@@ -1286,7 +1286,7 @@ fn should_not_allow_non_approved_contract_to_transfer() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -1323,7 +1323,7 @@ fn should_not_allow_non_approved_contract_to_transfer() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -1385,7 +1385,7 @@ fn transfer_should_correctly_track_page_table_entries() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => *ACCOUNT_1_KEY
@@ -1499,7 +1499,7 @@ fn should_transfer_token_from_sender_to_receiver_with_transfer_only_reporting() 
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_owner_key
@@ -1516,7 +1516,7 @@ fn should_transfer_token_from_sender_to_receiver_with_transfer_only_reporting() 
 
     let minting_request = ExecuteRequestBuilder::contract_call_by_hash(
         token_owner,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_MINT,
         mint_runtime_args,
     )
@@ -1537,7 +1537,7 @@ fn should_transfer_token_from_sender_to_receiver_with_transfer_only_reporting() 
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -1630,7 +1630,7 @@ fn disallow_owner_to_approve_itself() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -1686,7 +1686,7 @@ fn disallow_operator_to_approve_itself() {
 
     let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -1698,7 +1698,7 @@ fn disallow_operator_to_approve_itself() {
 
     let approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         operator,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -1750,7 +1750,7 @@ fn disallow_owner_to_approve_for_all_itself() {
 
     let approval_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -1789,7 +1789,7 @@ fn check_transfers_with_transfer_filter_contract_modes() {
     let transfer_filter_contract_set_return_value_request =
         ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            transfer_filter_contract_hash.into(),
+            transfer_filter_contract_hash,
             "set_return_value",
             runtime_args! {
                 ARG_FILTER_CONTRACT_RETURN_VALUE => TransferFilterContractResult::DenyTransfer as u8
@@ -1843,7 +1843,7 @@ fn check_transfers_with_transfer_filter_contract_modes() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -1880,7 +1880,7 @@ fn check_transfers_with_transfer_filter_contract_modes() {
     let transfer_filter_contract_set_return_value_request =
         ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            transfer_filter_contract_hash.into(),
+            transfer_filter_contract_hash,
             "set_return_value",
             runtime_args! {
                 ARG_FILTER_CONTRACT_RETURN_VALUE => TransferFilterContractResult::ProceedTransfer as u8
@@ -1994,7 +1994,7 @@ fn should_disallow_transfer_from_contract_with_package_operator_mode_without_ope
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2077,7 +2077,7 @@ fn should_disallow_transfer_from_contract_without_package_operator_mode_with_pac
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2100,7 +2100,7 @@ fn should_disallow_transfer_from_contract_without_package_operator_mode_with_pac
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2182,7 +2182,7 @@ fn should_allow_transfer_from_contract_with_package_operator_mode_with_operator(
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2205,7 +2205,7 @@ fn should_allow_transfer_from_contract_with_package_operator_mode_with_operator(
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2290,7 +2290,7 @@ fn should_disallow_package_operator_to_approve_without_package_operator_mode() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2305,7 +2305,7 @@ fn should_disallow_package_operator_to_approve_without_package_operator_mode() {
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2401,7 +2401,7 @@ fn should_allow_package_operator_to_approve_with_package_operator_mode() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2415,7 +2415,7 @@ fn should_allow_package_operator_to_approve_with_package_operator_mode() {
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2464,7 +2464,7 @@ fn should_allow_package_operator_to_approve_with_package_operator_mode() {
 
     let approved_transfer_request = ExecuteRequestBuilder::contract_call_by_hash(
         spender,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_TRANSFER,
         transfer_runtime_arguments,
     )
@@ -2534,7 +2534,7 @@ fn should_allow_account_to_approve_spender_with_package_operator() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2548,7 +2548,7 @@ fn should_allow_account_to_approve_spender_with_package_operator() {
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2573,7 +2573,7 @@ fn should_allow_account_to_approve_spender_with_package_operator() {
 
     let approved_approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         approve_runtime_arguments,
     )
@@ -2593,7 +2593,7 @@ fn should_allow_account_to_approve_spender_with_package_operator() {
 
     let approved_transfer_request = ExecuteRequestBuilder::contract_call_by_hash(
         *ACCOUNT_2_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_TRANSFER,
         transfer_runtime_arguments,
     )
@@ -2663,7 +2663,7 @@ fn should_allow_package_operator_to_revoke_with_package_operator_mode() {
 
     let register_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_REGISTER_OWNER,
         runtime_args! {
             ARG_TOKEN_OWNER => token_receiver_key
@@ -2677,7 +2677,7 @@ fn should_allow_package_operator_to_revoke_with_package_operator_mode() {
 
     let set_approve_for_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -2703,7 +2703,7 @@ fn should_allow_package_operator_to_revoke_with_package_operator_mode() {
 
     let approved_approve_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_APPROVE,
         approve_runtime_arguments,
     )
@@ -2744,7 +2744,7 @@ fn should_allow_package_operator_to_revoke_with_package_operator_mode() {
 
     let non_approved_transfer_request = ExecuteRequestBuilder::contract_call_by_hash(
         spender,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_TRANSFER,
         transfer_runtime_arguments,
     )

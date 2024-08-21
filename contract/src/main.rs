@@ -1897,9 +1897,9 @@ pub extern "C" fn migrate() {
         .unwrap_or(EventsMode::NoEvents);
 
     if let Some(optional_events_mode) = optional_events_mode {
-        if optional_events_mode as u8 != current_events_mode as u8 {
+        if optional_events_mode != current_events_mode as u8 {
             runtime::put_key(EVENTS_MODE, storage::new_uref(optional_events_mode).into());
-            if let Some(_) = get_key(casper_event_standard::EVENTS_DICT) {
+            if get_key(casper_event_standard::EVENTS_DICT).is_some() {
                 utils::init_events();
             }
         }

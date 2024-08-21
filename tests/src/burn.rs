@@ -67,7 +67,7 @@ fn should_burn_minted_token(reporting: OwnerReverseLookupMode) {
         let token_page = support::get_token_page_by_id(
             &builder,
             &nft_contract_key,
-            &*DEFAULT_ACCOUNT_KEY,
+            &DEFAULT_ACCOUNT_KEY,
             token_id,
         );
 
@@ -80,7 +80,7 @@ fn should_burn_minted_token(reporting: OwnerReverseLookupMode) {
 
         let minting_request = ExecuteRequestBuilder::contract_call_by_hash(
             *DEFAULT_ACCOUNT_ADDR,
-            nft_contract_hash.into(),
+            nft_contract_hash,
             ENTRY_POINT_MINT,
             mint_runtime_args,
         )
@@ -177,7 +177,7 @@ fn should_not_burn_previously_burnt_token() {
     builder.exec(mint_session_call).expect_success().commit();
 
     let token_page =
-        support::get_token_page_by_id(&builder, &nft_contract_key, &*DEFAULT_ACCOUNT_KEY, 0u64);
+        support::get_token_page_by_id(&builder, &nft_contract_key, &DEFAULT_ACCOUNT_KEY, 0u64);
 
     assert!(token_page[0]);
 
@@ -286,13 +286,13 @@ fn should_return_expected_error_burning_of_others_users_token() {
     builder.exec(mint_session_call).expect_success().commit();
 
     let token_page =
-        support::get_token_page_by_id(&builder, &nft_contract_key, &*DEFAULT_ACCOUNT_KEY, 0u64);
+        support::get_token_page_by_id(&builder, &nft_contract_key, &DEFAULT_ACCOUNT_KEY, 0u64);
 
     assert!(token_page[0]);
 
     let incorrect_burn_request = ExecuteRequestBuilder::contract_call_by_hash(
         account_user_1,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_BURN,
         runtime_args! {
             ARG_TOKEN_ID => 0u64,
@@ -489,7 +489,7 @@ fn should_let_account_operator_burn_tokens_with_operator_burn_mode() {
 
     let burn_request = ExecuteRequestBuilder::contract_call_by_hash(
         operator,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_BURN,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -508,7 +508,7 @@ fn should_let_account_operator_burn_tokens_with_operator_burn_mode() {
 
     let approve_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -521,7 +521,7 @@ fn should_let_account_operator_burn_tokens_with_operator_burn_mode() {
 
     let burn_request = ExecuteRequestBuilder::contract_call_by_hash(
         operator,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_BURN,
         runtime_args! {
             ARG_TOKEN_ID => token_id,
@@ -632,7 +632,7 @@ fn should_let_contract_operator_burn_tokens_with_operator_burn_mode() {
 
     let approve_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -759,7 +759,7 @@ fn should_let_package_operator_burn_tokens_with_contract_package_mode_and_operat
 
     let approve_all_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_APPROVALL_FOR_ALL,
         runtime_args! {
             ARG_APPROVE_ALL => true,
@@ -849,7 +849,7 @@ fn should_burn_token_in_hash_identifier_mode() {
 
     let burn_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_BURN,
         runtime_args! {
             ARG_TOKEN_HASH => token_hash,

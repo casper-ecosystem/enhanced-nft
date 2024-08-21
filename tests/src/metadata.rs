@@ -66,7 +66,7 @@ fn should_prevent_update_in_immutable_mode() {
 
     let update_token_metadata_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        support::get_nft_contract_hash(&builder).into(),
+        support::get_nft_contract_hash(&builder),
         ENTRY_POINT_SET_TOKEN_METADATA,
         runtime_args! {
             ARG_TOKEN_HASH => token_hash,
@@ -141,7 +141,7 @@ fn should_prevent_update_for_invalid_metadata() {
 
     let update_token_metadata_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        support::get_nft_contract_hash(&builder).into(),
+        support::get_nft_contract_hash(&builder),
         ENTRY_POINT_SET_TOKEN_METADATA,
         runtime_args! {
             ARG_TOKEN_ID => 0u64,
@@ -205,7 +205,7 @@ fn should_prevent_metadata_update_by_non_owner_key() {
 
     let update_token_metadata_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        support::get_nft_contract_hash(&builder).into(),
+        support::get_nft_contract_hash(&builder),
         ENTRY_POINT_SET_TOKEN_METADATA,
         runtime_args! {
             ARG_TOKEN_ID => 0u64,
@@ -318,7 +318,7 @@ fn should_allow_update_for_valid_metadata_based_on_kind(
 
     let update_metadata_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        support::get_nft_contract_hash(&builder).into(),
+        support::get_nft_contract_hash(&builder),
         ENTRY_POINT_SET_TOKEN_METADATA,
         update_metadata_runtime_args,
     )

@@ -11,7 +11,7 @@ use casper_contract::{
     contract_api::{runtime, storage},
     unwrap_or_revert::UnwrapOrRevert,
 };
-use casper_types::{contracts::ContractHash, runtime_args, AddressableEntityHash, ApiError, Key};
+use casper_types::{runtime_args, AddressableEntityHash, ApiError, Key};
 
 const ENTRY_POINT_BALANCE_OF: &str = "balance_of";
 const ARG_NFT_CONTRACT_HASH: &str = "nft_contract_hash";

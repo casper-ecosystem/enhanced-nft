@@ -43,7 +43,7 @@ fn only_installer_should_be_able_to_toggle_allow_minting() {
     // Red test
     let other_user_set_variables_request = ExecuteRequestBuilder::contract_call_by_hash(
         other_user_account,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! { ARG_ALLOW_MINTING => true },
     )
@@ -72,7 +72,7 @@ fn only_installer_should_be_able_to_toggle_allow_minting() {
     // Green test
     let installer_set_variables_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! { ARG_ALLOW_MINTING => true },
     )
@@ -121,7 +121,7 @@ fn installer_should_be_able_to_toggle_acl_package_mode() {
     // Installer account should be able to change ACL package mode
     let installer_set_variables_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! { ARG_ACL_PACKAGE_MODE => true },
     )
@@ -173,7 +173,7 @@ fn installer_should_be_able_to_toggle_package_operator_mode() {
     // Installer account should be able to change package operator mode
     let installer_set_variables_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! { ARG_PACKAGE_OPERATOR_MODE => true },
     )
@@ -225,7 +225,7 @@ fn installer_should_be_able_to_toggle_operator_burn_mode() {
     // Installer account should be able to change package operator mode
     let installer_set_variables_request = ExecuteRequestBuilder::contract_call_by_hash(
         *DEFAULT_ACCOUNT_ADDR,
-        nft_contract_hash.into(),
+        nft_contract_hash,
         ENTRY_POINT_SET_VARIABLES,
         runtime_args! { ARG_OPERATOR_BURN_MODE => true },
     )
