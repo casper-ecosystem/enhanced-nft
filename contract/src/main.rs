@@ -1884,26 +1884,17 @@ pub extern "C" fn migrate() {
     runtime::put_key(RLO_MFLAG, storage::new_uref(false).into());
 
     let optional_events_mode: Option<u8> = runtime::get_named_arg::<Option<u8>>(ARG_EVENTS_MODE);
-    let current_events_mode: EventsMode = runtime::get_key(EVENTS_MODE)
-        .and_then(|_| {
-            utils::get_stored_value_with_user_errors::<u8>(
-                EVENTS_MODE,
-                NFTCoreError::MissingEventsMode,
-                NFTCoreError::InvalidEventsMode,
-            )
-            .try_into()
-            .ok()
-        })
-        .unwrap_or(EventsMode::NoEvents);
 
     if let Some(optional_events_mode) = optional_events_mode {
-        if optional_events_mode != current_events_mode as u8 {
+        if EventsMode::try_from(optional_events_mode).is_ok() {
             runtime::put_key(EVENTS_MODE, storage::new_uref(optional_events_mode).into());
-            if get_key(casper_event_standard::EVENTS_DICT).is_some() {
-                utils::init_events();
-            }
         }
     }
+
+    if get_key(casper_event_standard::EVENTS_DICT).is_none() {
+        utils::init_events();
+    }
+
     emit_event(Event::Migration(Migration::new()));
 
     let acl_package_mode: bool = utils::get_optional_named_arg_with_user_errors::<bool>(

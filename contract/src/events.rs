@@ -5,6 +5,7 @@ use events_ces::{
     RevokedForAll, Transfer, VariablesSet,
 };
 use events_native::{emit_native_bytes, emit_native_string};
+use serde::{Deserialize, Serialize};
 
 use crate::{constants::EVENTS_MODE, error::NFTCoreError, modalities::EventsMode, utils};
 
@@ -15,6 +16,8 @@ pub mod events_native;
 // as a library and a binary.
 pub mod events_cep47;
 
+#[derive(Serialize, Deserialize)]
+#[serde(untagged)]
 pub enum Event {
     Mint(Mint),
     Burn(Burn),

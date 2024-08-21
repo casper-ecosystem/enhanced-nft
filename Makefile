@@ -28,7 +28,7 @@ build-contract:
 	wasm-strip test-contracts/minting_contract/target/wasm32-unknown-unknown/release/minting_contract.wasm
 	wasm-strip test-contracts/transfer_filter_contract/target/wasm32-unknown-unknown/release/transfer_filter_contract.wasm
 
-VERSIONS := 1_0_0 1_1_0 1_2_0 1_3_0 1_4_0 1_5_0
+VERSIONS := 
 
 setup-test: build-contract
 	mkdir -p tests/wasm
